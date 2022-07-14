@@ -1,0 +1,46 @@
+Numdata = readtable('AirProperties.xlsx');
+T = Numdata(:,1);
+h = Numdata(:,2);
+Pr = Numdata(:,3);
+u = Numdata(:,4);
+vr = Numdata(:,5);
+s = Numdata(:,6);
+
+T = table2array(T);
+h = table2array(h);
+Pr = table2array(Pr);
+u = table2array(u);
+vr = table2array(vr);
+s = table2array(s);
+
+h1 = interp1(T,h,300);
+Pr1 = interp1(T,Pr,300);
+
+Pr2 = Pr1*10;
+
+h2 = interp1(Pr,h,Pr2);
+Pr3 = interp1(T,Pr,1400);
+
+Pr4 = Pr3*0.1;
+h3 = interp1(T,h,1400);
+h4 = interp1(Pr,h,Pr4);
+
+Wc= h2-h1;
+Wt=h3-h4;
+Qin = h3-h2;
+n = (Wt-Wc)/Qin; 
+Thermal_efficiency_of_the_cycle = n
+
+bwr= Wc/Wt;
+Back_work_ratio = bwr
+
+AV1 = 5;
+P1 = 100000;
+R = 8.314/28.97;
+T1 = 300;
+m = ((AV1)*(P1))/ (R*T1*(10^3));
+Wcycle = m*((h3-h4)-(h2-h1));
+
+Net_Power_in_KW = Wcycle
+
+
